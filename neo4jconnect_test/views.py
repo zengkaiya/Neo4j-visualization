@@ -1,139 +1,162 @@
 import json
-from py2neo import *
+import requests
 from django.shortcuts import render
 
 # 连接数据库
-graph = Graph('http://localhost:7474/', auth=('neo4j', 'root'))
+NEO4J_URL = 'http://localhost:7474/db/n10s/tx/commit'
+NEO4J_AUTH = ('neo4j', '20090526Rui')
 
 
+# 定义一个函数发送 Cypher 查询请求
+def run_cypher_query(query):
+    headers = {'Content-Type': 'application/json'}
+    data = json.dumps({"statements": [{"statement": query}]})
+    response = requests.post(NEO4J_URL, data=data, headers=headers, auth=NEO4J_AUTH)
+    return response.json()
+
+
+# 查询所有节点和关系
 def search_all():
-    # 定义data数组，存放节点信息
     data = []
-    # 定义关系数组，存放节点间的关系
     links = []
-    # 查询所有节点，并将节点信息取出存放在data数组中
-    for n in graph.nodes:
-        # 将节点信息转化为json格式，否则中文会不显示
-        nodesStr = json.dumps(graph.nodes[n], ensure_ascii=False)
-        # 取出节点的name
-        node_name = json.loads(nodesStr)['name']
-        # 构造字典，存储单个节点信息
-        dict = {
+
+    # 查询所有节点
+    query = "MATCH (n) RETURN n"
+    result = run_cypher_query(query)
+
+    for record in result['results'][0]['data']:
+        node = record['row'][0]
+        node_name = node.get('name', 'Unknown')
+        node_dict = {
             'name': node_name,
             'symbolSize': 50,
             'category': '对象'
         }
-        # 将单个节点信息存放在data数组中
-        data.append(dict)
-    # 查询所有关系，并将所有的关系信息存放在links数组中
-    rps = graph.relationships
-    for r in rps:
-        # 取出开始节点的name
-        source = str(rps[r].start_node['name'])
-        # 取出结束节点的name
-        target = str(rps[r].end_node['name'])
-        # 取出开始节点的结束节点之间的关系
-        name = str(type(rps[r]).__name__)
-        # 构造字典存储单个关系信息
-        dict = {
+        data.append(node_dict)
+
+    # 查询所有关系
+    query = "MATCH (n)-[r]->(m) RETURN n, r, m"
+    result = run_cypher_query(query)
+
+    for record in result['results'][0]['data']:
+        source = record['row'][0].get('name', 'Unknown')
+        target = record['row'][2].get('name', 'Unknown')
+        relationship_type = record['row'][1].get('type', 'UNKNOWN_REL')
+        link_dict = {
             'source': source,
             'target': target,
-            'name': name
+            'name': relationship_type
         }
-        # 将单个关系信息存放进links数组中
-        links.append(dict)
-    # 输出所有节点信息
-    # for item in data:
-    #     print(item)
-    # 输出所有关系信息
-    # for item in links:
-    #     print(item)
-    # 将所有的节点信息和关系信息存放在一个字典中
+        links.append(link_dict)
+
+    # 将节点和关系数据封装为字典
     neo4j_data = {
         'data': data,
         'links': links
     }
-    neo4j_data = json.dumps(neo4j_data)
-    return neo4j_data
+
+    return json.dumps(neo4j_data)
 
 
+# 查询特定节点及其相关的节点和关系
 def search_one(value):
-    # 定义data数组存储节点信息
     data = []
-    # 定义links数组存储关系信息
     links = []
-    # 查询节点是否存在
-    node = graph.run('MATCH(n:person{name:"' + value + '"}) return n').data()
-    # 如果节点存在len(node)的值为1不存在的话len(node)的值为0
-    if len(node):
-        # 如果该节点存在将该节点存入data数组中
-        # 构造字典存放节点信息
-        dict = {
+
+    # 查询指定节点是否存在
+    query = f"MATCH (n:person {{name: '{value}'}}) RETURN n"
+    result = run_cypher_query(query)
+
+    if result['results'][0]['data']:
+        # 如果节点存在，将该节点加入 data 数组
+        node_dict = {
             'name': value,
             'symbolSize': 50,
             'category': '对象'
         }
-        data.append(dict)
-        # 查询与该节点有关的节点，无向，步长为1，并返回这些节点
-        nodes = graph.run('MATCH(n:person{name:"' + value + '"})<-->(m:person) return m').data()
-        # 查询该节点所涉及的所有relationship，无向，步长为1，并返回这些relationship
-        reps = graph.run('MATCH(n:person{name:"' + value + '"})<-[rel]->(m:person) return rel').data()
-        # 处理节点信息
-        for n in nodes:
-            # 将节点信息的格式转化为json
-            node = json.dumps(n, ensure_ascii=False)
-            node = json.loads(node)
-            # 取出节点信息中person的name
-            name = str(node['m']['name'])
-            # 构造字典存放单个节点信息
-            dict = {
-                'name': name,
+        data.append(node_dict)
+
+        # 查询该节点的相关节点和关系
+        query = f"""
+        MATCH (n:person {{name: '{value}'}})-[rel]-(m:person)
+        RETURN n, rel, m
+        """
+        result = run_cypher_query(query)
+
+        for record in result['results'][0]['data']:
+            target = record['row'][2].get('name', 'Unknown')
+            relationship_type = record['row'][1].get('type', 'UNKNOWN_REL')
+
+            # 添加相关节点
+            target_dict = {
+                'name': target,
                 'symbolSize': 50,
                 'category': '对象'
             }
-            # 将单个节点信息存储进data数组中
-            data.append(dict)
-        # 处理relationship
-        for r in reps:
-            source = str(r['rel'].start_node['name'])
-            target = str(r['rel'].end_node['name'])
-            name = str(type(r['rel']).__name__)
-            dict = {
-                'source': source,
+            data.append(target_dict)
+
+            # 添加关系
+            link_dict = {
+                'source': value,
                 'target': target,
-                'name': name
+                'name': relationship_type
             }
-            links.append(dict)
-        # 构造字典存储data和links
+            links.append(link_dict)
+
         search_neo4j_data = {
             'data': data,
             'links': links
         }
-        # 将dict转化为json格式
-        search_neo4j_data = json.dumps(search_neo4j_data)
-        return search_neo4j_data
+        return json.dumps(search_neo4j_data)
     else:
-        # print("查无此节点")
         return 0
 
 
+# 视图函数
 def index(request):
     ctx = {}
     if request.method == 'POST':
-        # 接收前端传过来的查询值
         node_name = request.POST.get('node')
-        # 查询结果
         search_neo4j_data = search_one(node_name)
-        # 未查询到该节点
+        print(node_name)
+        print(search_neo4j_data)
+        search_neo4j_data = [
+            {
+                'data': [
+                    {'name': 'SearchNode1', 'category': 0, 'des': 'This is SearchNode 1'},
+                    {'name': 'SearchNode2', 'category': 1, 'des': 'This is SearchNode 2'},
+                ],
+                'links': [
+                    {'source': 'SearchNode1', 'target': 'SearchNode2', 'name': 'SearchRelation'},
+                ]
+            }
+        ]
         if search_neo4j_data == 0:
+            print(-1)
             ctx = {'title': '数据库中暂未添加该实体'}
             neo4j_data = search_all()
             return render(request, 'index.html', {'neo4j_data': neo4j_data, 'ctx': ctx})
-        # 查询到了该节点
         else:
-            neo4j_data = search_all()
+            #neo4j_data = search_all()
+            print(2)
+            neo4j_data = [
+                {
+                    'data': [
+                        {'name': 'Node1', 'category': 0, 'des': 'This is Node 1'},
+                        {'name': 'Node2', 'category': 1, 'des': 'This is Node 2'},
+                        {'name': 'Node3', 'category': 2, 'des': 'This is Node 3'},
+                    ],
+                    'links': [
+                        {'source': 'Node1', 'target': 'Node2', 'name': 'Relation1'},
+                        {'source': 'Node2', 'target': 'Node3', 'name': 'Relation2'},
+                    ]
+                }
+            ]
+            ctx = None
             return render(request, 'index.html',
-                          {'neo4j_data': neo4j_data, 'search_neo4j_data': search_neo4j_data, 'ctx': ctx})
+                          {'neo4j_data': json.dumps(neo4j_data),
+                           'search_neo4j_data': json.dumps(search_neo4j_data),
+                           'ctx': ctx})
 
     neo4j_data = search_all()
     return render(request, 'index.html', {'neo4j_data': neo4j_data, 'ctx': ctx})

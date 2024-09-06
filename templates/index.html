@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="icon" href="{% static 'favicon_io/favicon.ico' %}" type="image/x-icon">
     <script type="text/javascript" src="{% static 'echarts.min.js' %}"></script>
 </head>
 <body>
@@ -27,7 +28,7 @@
 </div>
 <script type="text/javascript">
     {#查询所有#}
-    var neo4j_data = [{{ neo4j_data|safe }}]
+    var neo4j_data = {{ neo4j_data|safe }}
     var data1 = neo4j_data[0]['data']
     var links1 = neo4j_data[0]['links']
     {#console.log(data1)#}
@@ -118,7 +119,7 @@
     myChart1.setOption(option1);
 
     {#查询单个#}
-    var search_neo4j_data=[{{ search_neo4j_data|safe }}]
+    var search_neo4j_data={{ search_neo4j_data|safe }}
     var data2=search_neo4j_data[0]['data']
     var links2=search_neo4j_data[0]['links']
     {#console.log(data2)#}
