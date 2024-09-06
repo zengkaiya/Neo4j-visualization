@@ -15,7 +15,7 @@ data = {
 }
 
 try:
-    response = requests.post(url, headers=headers, auth=("neo4j", "20090526Rui"), json=data)
+    response = requests.post(url, headers=headers, auth=("neo4j", "zxcvbnm106"), json=data)
     # 输出原始响应内容
     print("Response Status Code:", response.status_code)
     print("Response Content:", response.content.decode("utf-8"))
