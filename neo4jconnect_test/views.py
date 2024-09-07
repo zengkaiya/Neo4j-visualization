@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 # 连接数据库
 NEO4J_URL = 'http://localhost:7474/db/n10s/tx/commit'
-NEO4J_AUTH = ('neo4j', 'zxcvbnm106')
+NEO4J_AUTH = ('neo4j', '20090526Rui')
 
 
 # 定义一个函数发送 Cypher 查询请求
@@ -17,6 +17,7 @@ def run_cypher_query(query):
 
 # 查询所有节点和关系
 def search_all():
+    return 0
     data = []
     links = []
 
