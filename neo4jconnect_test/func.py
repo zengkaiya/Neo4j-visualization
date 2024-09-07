@@ -48,7 +48,7 @@ class Model:
         return []
 
 
-if __name__ == '__main__'：
+if __name__ == '__main__':
 
     model = Model()
 
