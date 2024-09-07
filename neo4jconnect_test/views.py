@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 # 连接数据库
 NEO4J_URL = 'http://localhost:7474/db/n10s/tx/commit'
-NEO4J_AUTH = ('neo4j', '20090526Rui')
+NEO4J_AUTH = ('neo4j', 'zxcvbnm106')
 
 
 # 定义一个函数发送 Cypher 查询请求
@@ -17,8 +17,6 @@ def run_cypher_query(query):
 
 # 查询所有节点和关系
 def search_all():
-    return 0
-
     data = []
     links = []
 
@@ -66,9 +64,10 @@ def search_one(value):
     links = []
 
     # 查询指定节点是否存在
-    query = f"MATCH (n:person {{name: '{value}'}}) RETURN n"
+    query = f"MATCH (n) RETURN n"
     result = run_cypher_query(query)
-
+    # print(111)
+    # 找个里面的逻辑还得改，怎么查询节点
     if result['results'][0]['data']:
         # 如果节点存在，将该节点加入 data 数组
         node_dict = {
@@ -139,7 +138,8 @@ def index(request):
             neo4j_data = search_all()
             return render(request, 'index.html', {'neo4j_data': neo4j_data, 'ctx': ctx})
         else:
-            #neo4j_data = search_all()
+            # 走的是这里
+            neo4j_data = search_all()
             print(2)
             neo4j_data = [
                 {
@@ -154,6 +154,7 @@ def index(request):
                     ]
                 }
             ]
+            neo4j_data = search_neo4j_data
             ctx = None
             return render(request, 'index.html',
                           {'neo4j_data': json.dumps(neo4j_data),
@@ -161,4 +162,5 @@ def index(request):
                            'ctx': ctx})
 
     neo4j_data = search_all()
+    # print(neo4j_data)
     return render(request, 'index.html', {'neo4j_data': neo4j_data, 'ctx': ctx})

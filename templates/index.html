@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>疾病药物关系可视化网站</title>
     <script type="text/javascript" src="{% static 'echarts.min.js' %}"></script>
 </head>
 <body>
@@ -14,6 +14,7 @@
             {% csrf_token %}
             <!-- 节点/边搜索框 -->
             <input type="text" name="node_or_edge" placeholder="节点/边" style="width: 250px;height: 20px; margin-left: 20px;">
+            <div style="margin-bottom: 10px;"></div> <!-- 占位元素，用于分隔第一个输入框 -->
             <!-- 属性名搜索框 -->
             <input type="text" name="property_name" placeholder="属性名" style="width: 250px;height: 20px; margin-left: 20px;">
             <!-- 属性值搜索框 -->
@@ -108,7 +109,7 @@
     var categories2 = [{name: "对象"}, {name: "属性"}, {name: "实例"}];
     option2 = {
         title: {
-            text: '查询人物关系图谱'
+            text: '查询到的药物与疾病图谱'
         },
         tooltip: {
             formatter: function (x) {
