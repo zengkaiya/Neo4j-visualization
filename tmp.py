@@ -9,7 +9,7 @@ headers = {
 data = {
     "statements": [
         {
-            "statement": "MATCH (n) RETURN n LIMIT 1000"
+            "statement": "MATCH (n) RETURN n LIMIT 1"
         }
     ]
 }

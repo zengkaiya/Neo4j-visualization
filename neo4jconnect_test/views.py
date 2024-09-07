@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 # 连接数据库
 NEO4J_URL = 'http://localhost:7474/db/n10s/tx/commit'
-NEO4J_AUTH = ('neo4j', '20090526Rui')
+NEO4J_AUTH = ('neo4j', 'zxcvbnm106')
 
 
 # 定义一个函数发送 Cypher 查询请求
@@ -64,9 +64,10 @@ def search_one(value):
     links = []
 
     # 查询指定节点是否存在
-    query = f"MATCH (n:person {{name: '{value}'}}) RETURN n"
+    query = f"MATCH (n) RETURN n"
     result = run_cypher_query(query)
-
+    # print(111)
+    # 找个里面的逻辑还得改，怎么查询节点
     if result['results'][0]['data']:
         # 如果节点存在，将该节点加入 data 数组
         node_dict = {
@@ -120,38 +121,40 @@ def index(request):
         search_neo4j_data = search_one(node_name)
         print(node_name)
         print(search_neo4j_data)
-        search_neo4j_data = [
-            {
-                'data': [
-                    {'name': 'SearchNode1', 'category': 0, 'des': 'This is SearchNode 1'},
-                    {'name': 'SearchNode2', 'category': 1, 'des': 'This is SearchNode 2'},
-                ],
-                'links': [
-                    {'source': 'SearchNode1', 'target': 'SearchNode2', 'name': 'SearchRelation'},
-                ]
-            }
-        ]
+        # search_neo4j_data = [
+        #     {
+        #         'data': [
+        #             {'name': 'SearchNode1', 'category': 0, 'des': 'This is SearchNode 1'},
+        #             {'name': 'SearchNode2', 'category': 1, 'des': 'This is SearchNode 2'},
+        #         ],
+        #         'links': [
+        #             {'source': 'SearchNode1', 'target': 'SearchNode2', 'name': 'SearchRelation'},
+        #         ]
+        #     }
+        # ]
         if search_neo4j_data == 0:
             print(-1)
             ctx = {'title': '数据库中暂未添加该实体'}
             neo4j_data = search_all()
             return render(request, 'index.html', {'neo4j_data': neo4j_data, 'ctx': ctx})
         else:
+            # 走的是这里
             #neo4j_data = search_all()
             print(2)
-            neo4j_data = [
-                {
-                    'data': [
-                        {'name': 'Node1', 'category': 0, 'des': 'This is Node 1'},
-                        {'name': 'Node2', 'category': 1, 'des': 'This is Node 2'},
-                        {'name': 'Node3', 'category': 2, 'des': 'This is Node 3'},
-                    ],
-                    'links': [
-                        {'source': 'Node1', 'target': 'Node2', 'name': 'Relation1'},
-                        {'source': 'Node2', 'target': 'Node3', 'name': 'Relation2'},
-                    ]
-                }
-            ]
+            # neo4j_data = [
+            #     {
+            #         'data': [
+            #             {'name': 'Node1', 'category': 0, 'des': 'This is Node 1'},
+            #             {'name': 'Node2', 'category': 1, 'des': 'This is Node 2'},
+            #             {'name': 'Node3', 'category': 2, 'des': 'This is Node 3'},
+            #         ],
+            #         'links': [
+            #             {'source': 'Node1', 'target': 'Node2', 'name': 'Relation1'},
+            #             {'source': 'Node2', 'target': 'Node3', 'name': 'Relation2'},
+            #         ]
+            #     }
+            # ]
+            neo4j_data = search_neo4j_data
             ctx = None
             return render(request, 'index.html',
                           {'neo4j_data': json.dumps(neo4j_data),
@@ -159,4 +162,5 @@ def index(request):
                            'ctx': ctx})
 
     neo4j_data = search_all()
+    # print(neo4j_data)
     return render(request, 'index.html', {'neo4j_data': neo4j_data, 'ctx': ctx})
