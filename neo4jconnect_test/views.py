@@ -18,6 +18,7 @@ def run_cypher_query(query):
 # 查询所有节点和关系
 def search_all():
     return 0
+
     data = []
     links = []
 
