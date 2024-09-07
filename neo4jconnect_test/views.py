@@ -8,6 +8,45 @@ model = Model()
 
 che_data = []
 dis_data = []
+links_data = []
+
+def get_data(depth, curr_che, curr_dis):
+    depth -= 1
+    if depth == 0:
+        return
+    
+    if curr_che != None:
+        che_id = curr_che.chemical_id
+        links_ans = model.find_diseases_associated_with_chemical(che_id)
+        if len(links_ans) != 0:
+            count = 0
+            for link in links_ans:
+                count += 1
+                if count > 6:
+                    break
+                links_data.append({'source': che_id, 'target': link.disease_id, 'name': 'associated_with'})
+                dis_data.append(model.find_disease_by_id(link.disease_id))
+                get_data(depth, None, dis_data[-1])
+    
+    if curr_dis != None:
+        dis_id = curr_dis.disease_id
+        links_ans = model.find_chemicals_associated_with_disease(dis_id)
+        if len(links_ans) != 0:
+            count = 0
+            for link in links_ans:
+                count += 1
+                if count > 6:
+                    break
+                links_data.append({'source': dis_id, 'target': link.chemical_id, 'name': 'associated_with'})
+                che_data.append(model.find_chemical_by_id(link.chemical_id))
+                get_data(depth, che_data[-1], None)
+
+
+
+
+
+
+
 
 # 视图函数
 def index(request):
@@ -43,12 +82,18 @@ def index(request):
                 else:
                     che_data.append(che_name_ans[0])
 
-                che_id = che_data[0].chemical_id
-                links_ans = model.find_diseases_associated_with_chemical(che_id)
-                if len(links_ans) != 0:
-                    for link in links_ans:
-                        links_data.append({'source': che_id, 'target': link.disease_id, 'name': 'associated_with'})
-                        dis_data.append(model.find_disease_by_id(link.disease_id))
+                get_data(2, che_data[0], None)
+
+                # che_id = che_data[0].chemical_id
+                # links_ans = model.find_diseases_associated_with_chemical(che_id)
+                # if len(links_ans) != 0:
+                #     count = 0
+                #     for link in links_ans:
+                #         count += 1
+                #         if count > 6:
+                #             break
+                #         links_data.append({'source': che_id, 'target': link.disease_id, 'name': 'associated_with'})
+                #         dis_data.append(model.find_disease_by_id(link.disease_id))
 
 
             elif dis_id_ans != None or len(dis_name_ans) != 0:
@@ -58,12 +103,18 @@ def index(request):
                 else:
                     dis_data.append(dis_name_ans[0])
 
-                dis_id = dis_data[0].disease_id
-                links_ans = model.find_chemicals_associated_with_disease(dis_id)
-                if len(links_ans) != 0:
-                    for link in links_ans:
-                        links_data.append({'source': dis_id, 'target': link.chemical_id, 'name': 'associated_with'})
-                        che_data.append(model.find_chemical_by_id(link.chemical_id))
+                get_data(2, None, dis_data[0])
+
+                # dis_id = dis_data[0].disease_id
+                # links_ans = model.find_chemicals_associated_with_disease(dis_id)
+                # if len(links_ans) != 0:
+                #     count = 0
+                #     for link in links_ans:
+                #         count += 1
+                #         if count > 6:
+                #             break
+                #         links_data.append({'source': dis_id, 'target': link.chemical_id, 'name': 'associated_with'})
+                #         che_data.append(model.find_chemical_by_id(link.chemical_id))
 
             neo4j_search_data = []
 
@@ -78,9 +129,11 @@ def index(request):
             neo4j_search = {'data': neo4j_search_data, 'links': links_data}
             neo4j_search = [neo4j_search]
             print(neo4j_search)
-
+            
             ctx = None
-            return render(request, 'index.html', {'neo4j_data': neo4j_search, 'ctx': ctx})
+            print(1)
+  
+            return render(request, 'index.html', {'neo4j_data':json.dumps(neo4j_search),'search_neo4j_data': json.dumps(neo4j_search), 'ctx': ctx})
 
 
 

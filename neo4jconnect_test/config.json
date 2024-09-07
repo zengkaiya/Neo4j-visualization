@@ -1,4 +1,281 @@
-{
-  "database": "neo4j",
-  "password": "zxcvbnm106"
-}
+
+[
+  {"data": [
+      {"name": "MESH:C534883", "category": 0, "des": "10074-G5"
+      },
+      {"name": "MESH:D009190", "category": 1, "des": "Myelodysplastic Syndromes"
+      },
+      {"name": "MESH:D010051", "category": 1, "des": "Ovarian Neoplasms"
+      },
+      {"name": "MESH:D007248", "category": 1, "des": "Infertility, Male"
+      },
+      {"name": "MESH:D011471", "category": 1, "des": "Prostatic Neoplasms"
+      },
+      {"name": "OMIM: 603688", "category": 1, "des": "PROSTATE CANCER/BRAIN CANCER SUSCEPTIBILITY"
+      },
+      {"name": "MESH:D009396", "category": 1, "des": "Wilms Tumor"
+      },
+      {"name": "MESH:D011471", "category": 1, "des": "Prostatic Neoplasms"
+      },
+      {"name": "MESH:D005909", "category": 1, "des": "Glioblastoma"
+      },
+      {"name": "MESH:D007247", "category": 1, "des": "Infertility, Female"
+      },
+      {"name": "MESH:D016403", "category": 1, "des": "Lymphoma, Large B-Cell, Diffuse"
+      },
+      {"name": "MESH:D010190", "category": 1, "des": "Pancreatic Neoplasms"
+      },
+      {"name": "MESH:D015470", "category": 1, "des": "Leukemia, Myeloid, Acute"
+      },
+      {"name": "MESH:D019048", "category": 1, "des": "Prostatic Intraepithelial Neoplasia"
+      },
+      {"name": "MESH:D001749", "category": 1, "des": "Urinary Bladder Neoplasms"
+      },
+      {"name": "MESH:D009364", "category": 1, "des": "Neoplasm Recurrence, Local"
+      },
+      {"name": "MESH:D002583", "category": 1, "des": "Uterine Cervical Neoplasms"
+      },
+      {"name": "MESH:D016891", "category": 1, "des": "Polycystic Kidney, Autosomal Dominant"
+      },
+      {"name": "MESH:D008106", "category": 1, "des": "Liver Cirrhosis, Experimental"
+      },
+      {"name": "MESH:D000230", "category": 1, "des": "Adenocarcinoma"
+      },
+      {"name": "MESH:D000077192", "category": 1, "des": "Adenocarcinoma of Lung"
+      },
+      {"name": "MESH:D000505", "category": 1, "des": "Alopecia"
+      },
+      {"name": "MESH:D013734", "category": 1, "des": "Androgen-Insensitivity Syndrome"
+      },
+      {"name": "MESH:D001254", "category": 1, "des": "Astrocytoma"
+      },
+      {"name": "MESH:D001321", "category": 1, "des": "Autistic Disorder"
+      },
+      {"name": "MESH:D001943", "category": 1, "des": "Breast Neoplasms"
+      },
+      {"name": "MESH:D018567", "category": 1, "des": "Breast Neoplasms, Male"
+      },
+      {"name": "MESH:C537017", "category": 1, "des": "Bulbospinal neuronopathy, X-linked recessive"
+      },
+      {"name": "MESH:D002051", "category": 1, "des": "Burkitt Lymphoma"
+      },
+      {"name": "MESH:D002277", "category": 1, "des": "Carcinoma"
+      },
+      {"name": "MESH:D044584", "category": 1, "des": "Carcinoma, Ductal"
+      },
+      {"name": "MESH:D006528", "category": 1, "des": "Carcinoma, Hepatocellular"
+      },
+      {"name": "MESH:D006528", "category": 1, "des": "Carcinoma, Hepatocellular"
+      },
+      {"name": "MESH:D015266", "category": 1, "des": "Carcinoma, Merkel Cell"
+      },
+      {"name": "MESH:D002289", "category": 1, "des": "Carcinoma, Non-Small-Cell Lung"
+      },
+      {"name": "MESH:D002294", "category": 1, "des": "Carcinoma, Squamous Cell"
+      },
+      {"name": "MESH:D002312", "category": 1, "des": "Cardiomyopathy, Hypertrophic"
+      },
+      {"name": "MESH:D002471", "category": 1, "des": "Cell Transformation, Neoplastic"
+      },
+      {"name": "MESH:D019457", "category": 1, "des": "Chromosome Breakage"
+      },
+      {"name": "MESH:D002971", "category": 1, "des": "Cleft Lip"
+      },
+      {"name": "MESH:D002972", "category": 1, "des": "Cleft Palate"
+      },
+      {"name": "MESH:D003110", "category": 1, "des": "Colonic Neoplasms"
+      },
+      {"name": "MESH:D015179", "category": 1, "des": "Colorectal Neoplasms"
+      },
+      {"name": "MESH:D016640", "category": 1, "des": "Diabetes, Gestational"
+      },
+      {"name": "MESH:D004195", "category": 1, "des": "Disease Models, Animal"
+      },
+      {"name": "MESH:D018450", "category": 1, "des": "Disease Progression"
+      },
+      {"name": "MESH:D016889", "category": 1, "des": "Endometrial Neoplasms"
+      },
+      {"name": "MESH:D004806", "category": 1, "des": "Ependymoma"
+      },
+      {"name": "MESH:D005234", "category": 1, "des": "Fatty Liver"
+      },
+      {"name": "MESH:D005832", "category": 1, "des": "Genital Diseases, Male"
+      },
+      {"name": "MESH:D008114", "category": 1, "des": "Liver Neoplasms, Experimental"
+      },
+      {"name": "MESH:D007938", "category": 1, "des": "Leukemia"
+      },
+      {"name": "MESH:D006394", "category": 1, "des": "Hemangiosarcoma"
+      },
+      {"name": "MESH:D008175", "category": 1, "des": "Lung Neoplasms"
+      },
+      {"name": "MESH:C567482", "category": 1, "des": "Hypospadias 1, X-Linked"
+      },
+      {"name": "MESH:D008113", "category": 1, "des": "Liver Neoplasms"
+      },
+      {"name": "MESH:D010673", "category": 1, "des": "Pheochromocytoma"
+      },
+      {"name": "MESH:D064129", "category": 1, "des": "Prostatic Neoplasms, Castration-Resistant"
+      },
+      {"name": "MESH:D012516", "category": 1, "des": "Osteosarcoma"
+      },
+      {"name": "MESH:D013274", "category": 1, "des": "Stomach Neoplasms"
+      },
+      {"name": "MESH:D008527", "category": 1, "des": "Medulloblastoma"
+      },
+      {"name": "MESH:D007333", "category": 1, "des": "Insulin Resistance"
+      },
+      {"name": "MESH:D017379", "category": 1, "des": "Hypertrophy, Left Ventricular"
+      },
+      {"name": "MESH:D009447", "category": 1, "des": "Neuroblastoma"
+      },
+      {"name": "MESH:D009362", "category": 1, "des": "Neoplasm Metastasis"
+      },
+      {"name": "MESH:D006973", "category": 1, "des": "Hypertension"
+      },
+      {"name": "MESH:D008175", "category": 1, "des": "Lung Neoplasms"
+      },
+      {"name": "MESH:D009369", "category": 1, "des": "Neoplasms"
+      },
+      {"name": "MESH:D017599", "category": 1, "des": "Neuroectodermal Tumors"
+      }
+    ], "links": [
+      {"source": "MESH:C534883", "target": "MESH:D009190", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D010051", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D007248", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D011471", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "OMIM: 603688", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D009396", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D011471", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D005909", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D007247", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D016403", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D010190", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D015470", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D019048", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D001749", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D009364", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D002583", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D016891", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D008106", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D000230", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D000077192", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D000505", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D013734", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D001254", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D001321", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D001943", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D018567", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:C537017", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D002051", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D002277", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D044584", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D006528", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D006528", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D015266", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D002289", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D002294", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D002312", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D002471", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D019457", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D002971", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D002972", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D003110", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D015179", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D016640", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D004195", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D018450", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D016889", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D004806", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D005234", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D005832", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D008114", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D007938", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D006394", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D008175", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:C567482", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D008113", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D010673", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D064129", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D012516", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D013274", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D008527", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D007333", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D017379", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D009447", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D009362", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D006973", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D008175", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D009369", "name": "associated_with"
+      },
+      {"source": "MESH:C534883", "target": "MESH:D017599", "name": "associated_with"
+      }
+    ]
+  }
+]

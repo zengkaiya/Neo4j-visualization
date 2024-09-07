@@ -15,6 +15,7 @@ class Disease(StructuredNode):
     disease_id = StringProperty(unique_index=True)
     alt_ids = StringProperty()
     definition = StringProperty()
+    associated_with = RelationshipTo('Chemical', 'ASSOCIATED_WITH')
 
 # 定义 Chemical 模型
 class Chemical(StructuredNode):
