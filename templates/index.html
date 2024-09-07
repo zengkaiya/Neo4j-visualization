@@ -11,18 +11,18 @@
 <div style="width: 800px;height: 750px;float: right;margin-right: 10px;">
     <div style="width: 800px;height: 100px;border-top: 2px solid black;border-left: 2px solid black;border-right: 2px solid black">
         <form action="/" method="post" style="margin-top: 10px;">
-            {% csrf_token %}
-            <!-- 节点/边搜索框 -->
-            <input type="text" name="node_or_edge" placeholder="节点/边" style="width: 250px;height: 20px; margin-left: 20px;">
-            <div style="margin-bottom: 10px;"></div> <!-- 占位元素，用于分隔第一个输入框 -->
-            <!-- 属性名搜索框 -->
-            <input type="text" name="property_name" placeholder="属性名" style="width: 250px;height: 20px; margin-left: 20px;">
-            <!-- 属性值搜索框 -->
-            <input type="text" name="property_value" placeholder="属性值" style="width: 250px;height: 20px; margin-left: 20px;">
-            <!-- 提交按钮 -->
-            <input type="submit" value="查询" style="margin-left: 20px;margin-top: 10px;">
-            <input type="submit" value="删除" style="margin-left: 20px;margin-top: 10px;">
-            <input type="submit" value="增加" style="margin-left: 20px;margin-top: 10px;">
+                {% csrf_token %}
+                <!-- 节点/边搜索框 -->
+                <input type="text" name="node_or_edge" placeholder="节点/边" style="width: 250px;height: 20px; margin-left: 20px;">
+                <div style="margin-bottom: 10px;"></div> <!-- 占位元素，用于分隔第一个输入框 -->
+                <!-- 属性名搜索框 -->
+                <input type="text" name="property_name" placeholder="属性名" style="width: 250px;height: 20px; margin-left: 20px;">
+                <!-- 属性值搜索框 -->
+                <input type="text" name="property_value" placeholder="属性值" style="width: 250px;height: 20px; margin-left: 20px;">
+                <!-- 提交按钮 -->
+                <input type="submit" name="action" value="search" style="margin-left: 20px;margin-top: 10px;">
+                <input type="submit" name="action" value="delete" style="margin-left: 20px;margin-top: 10px;">
+                <input type="submit" name="action" value="add" style="margin-left: 20px;margin-top: 10px;">
         </form>
     </div>
     {% if ctx %}
