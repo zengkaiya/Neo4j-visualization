@@ -1,167 +1,97 @@
 import json
 import requests
 from django.shortcuts import render
+from .func import *
 
-# 连接数据库
-NEO4J_URL = 'http://localhost:7474/db/n10s/tx/commit'
-NEO4J_AUTH = ('neo4j', '20090526Rui')
-
-
-# 定义一个函数发送 Cypher 查询请求
-def run_cypher_query(query):
-    headers = {'Content-Type': 'application/json'}
-    data = json.dumps({"statements": [{"statement": query}]})
-    response = requests.post(NEO4J_URL, data=data, headers=headers, auth=NEO4J_AUTH)
-    return response.json()
+model = Model()
 
 
-# 查询所有节点和关系
-def search_all():
-    return 0
-    data = []
-    links = []
-
-    # 查询所有节点
-    query = "MATCH (n) RETURN n"
-    result = run_cypher_query(query)
-
-    for record in result['results'][0]['data']:
-        node = record['row'][0]
-        node_name = node.get('name', 'Unknown')
-        node_dict = {
-            'name': node_name,
-            'symbolSize': 50,
-            'category': '对象'
-        }
-        data.append(node_dict)
-
-    # 查询所有关系
-    query = "MATCH (n)-[r]->(m) RETURN n, r, m"
-    result = run_cypher_query(query)
-
-    for record in result['results'][0]['data']:
-        source = record['row'][0].get('name', 'Unknown')
-        target = record['row'][2].get('name', 'Unknown')
-        relationship_type = record['row'][1].get('type', 'UNKNOWN_REL')
-        link_dict = {
-            'source': source,
-            'target': target,
-            'name': relationship_type
-        }
-        links.append(link_dict)
-
-    # 将节点和关系数据封装为字典
-    neo4j_data = {
-        'data': data,
-        'links': links
-    }
-
-    return json.dumps(neo4j_data)
-
-
-# 查询特定节点及其相关的节点和关系
-def search_one(value):
-    data = []
-    links = []
-
-    # 查询指定节点是否存在
-    query = f"MATCH (n) RETURN n"
-    result = run_cypher_query(query)
-    # print(111)
-    # 找个里面的逻辑还得改，怎么查询节点
-    if result['results'][0]['data']:
-        # 如果节点存在，将该节点加入 data 数组
-        node_dict = {
-            'name': value,
-            'symbolSize': 50,
-            'category': '对象'
-        }
-        data.append(node_dict)
-
-        # 查询该节点的相关节点和关系
-        query = f"""
-        MATCH (n:person {{name: '{value}'}})-[rel]-(m:person)
-        RETURN n, rel, m
-        """
-        result = run_cypher_query(query)
-
-        for record in result['results'][0]['data']:
-            target = record['row'][2].get('name', 'Unknown')
-            relationship_type = record['row'][1].get('type', 'UNKNOWN_REL')
-
-            # 添加相关节点
-            target_dict = {
-                'name': target,
-                'symbolSize': 50,
-                'category': '对象'
-            }
-            data.append(target_dict)
-
-            # 添加关系
-            link_dict = {
-                'source': value,
-                'target': target,
-                'name': relationship_type
-            }
-            links.append(link_dict)
-
-        search_neo4j_data = {
-            'data': data,
-            'links': links
-        }
-        return json.dumps(search_neo4j_data)
-    else:
-        return 0
-
+che_data = []
+dis_data = []
 
 # 视图函数
 def index(request):
     ctx = {}
     if request.method == 'POST':
-        node_name = request.POST.get('node')
-        search_neo4j_data = search_one(node_name)
-        print(node_name)
-        print(search_neo4j_data)
-        search_neo4j_data = [
-            {
-                'data': [
-                    {'name': 'SearchNode1', 'category': 0, 'des': 'This is SearchNode 1'},
-                    {'name': 'SearchNode2', 'category': 1, 'des': 'This is SearchNode 2'},
-                ],
-                'links': [
-                    {'source': 'SearchNode1', 'target': 'SearchNode2', 'name': 'SearchRelation'},
-                ]
-            }
-        ]
-        if search_neo4j_data == 0:
-            print(-1)
-            ctx = {'title': '数据库中暂未添加该实体'}
-            neo4j_data = search_all()
-            return render(request, 'index.html', {'neo4j_data': neo4j_data, 'ctx': ctx})
-        else:
-            # 走的是这里
-            neo4j_data = search_all()
-            print(2)
-            neo4j_data = [
-                {
-                    'data': [
-                        {'name': 'Node1', 'category': 0, 'des': 'This is Node 1'},
-                        {'name': 'Node2', 'category': 1, 'des': 'This is Node 2'},
-                        {'name': 'Node3', 'category': 2, 'des': 'This is Node 3'},
-                    ],
-                    'links': [
-                        {'source': 'Node1', 'target': 'Node2', 'name': 'Relation1'},
-                        {'source': 'Node2', 'target': 'Node3', 'name': 'Relation2'},
-                    ]
-                }
-            ]
-            neo4j_data = search_neo4j_data
-            ctx = None
-            return render(request, 'index.html',
-                          {'neo4j_data': json.dumps(neo4j_data),
-                           'search_neo4j_data': json.dumps(search_neo4j_data),
-                           'ctx': ctx})
 
-    neo4j_data = search_all()
-    # print(neo4j_data)
-    return render(request, 'index.html', {'neo4j_data': neo4j_data, 'ctx': ctx})
+        action = request.POST.get('action')
+
+        if action == 'search':
+            node_or_edge = request.POST.get('node_or_edge')
+            property_name = request.POST.get('property_name')
+            property_value = request.POST.get('property_value')
+
+            che_data = []
+            dis_data = []
+            links_data = []
+            neo4j_search = []
+
+            che_id_ans = model.find_chemical_by_id(property_value)
+            dis_id_ans = model.find_disease_by_id(property_value)
+            che_name_ans = model.find_chemical_by_name(property_value)
+            dis_name_ans = model.find_disease_by_name(property_value)
+
+            if che_id_ans == None and che_name_ans == None and dis_id_ans == None and dis_name_ans == None:
+                ctx = {'title': '数据库中暂未添加该实体'}
+                return render(request, 'index.html', {'ctx': ctx})
+            
+
+            elif che_id_ans != None or len(che_name_ans) != 0:
+
+                if che_id_ans != None:
+                    che_data.append(che_id_ans)
+                else:
+                    che_data.append(che_name_ans[0])
+
+                che_id = che_data[0].chemical_id
+                links_ans = model.find_diseases_associated_with_chemical(che_id)
+                if len(links_ans) != 0:
+                    for link in links_ans:
+                        links_data.append({'source': che_id, 'target': link.disease_id, 'name': 'associated_with'})
+                        dis_data.append(model.find_disease_by_id(link.disease_id))
+
+
+            elif dis_id_ans != None or len(dis_name_ans) != 0:
+
+                if dis_id_ans != None:
+                    dis_data.append(dis_id_ans)
+                else:
+                    dis_data.append(dis_name_ans[0])
+
+                dis_id = dis_data[0].disease_id
+                links_ans = model.find_chemicals_associated_with_disease(dis_id)
+                if len(links_ans) != 0:
+                    for link in links_ans:
+                        links_data.append({'source': dis_id, 'target': link.chemical_id, 'name': 'associated_with'})
+                        che_data.append(model.find_chemical_by_id(link.chemical_id))
+
+            neo4j_search_data = []
+
+            if len(che_data) != 0:
+                for che in che_data:
+                    neo4j_search_data.append({'name': che.chemical_id, 'category': 0, 'des': che.name})
+
+            if len(dis_data) != 0:
+                for dis in dis_data:
+                    neo4j_search_data.append({'name': dis.disease_id, 'category': 1, 'des': dis.name})
+
+            neo4j_search = {'data': neo4j_search_data, 'links': links_data}
+            neo4j_search = [neo4j_search]
+            print(neo4j_search)
+
+            ctx = None
+            return render(request, 'index.html', {'neo4j_data': neo4j_search, 'ctx': ctx})
+
+
+
+        elif action == 'add':
+            pass
+
+        elif action == 'delete':
+            pass
+
+        elif action == 'update':
+            pass
+
+    
+    return render(request, 'index.html', {'ctx': ctx})

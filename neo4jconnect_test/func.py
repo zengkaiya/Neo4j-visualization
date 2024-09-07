@@ -1,5 +1,5 @@
 
-from Database import *
+from neo4jconnect_test.database import *
 from neomodel import config
 
 
@@ -94,7 +94,7 @@ class Model:
         return False
 
 
-if __name__ == '__main__'：
+if __name__ == '__main__':
 
     model = Model()
 
