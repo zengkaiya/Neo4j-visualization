@@ -17,7 +17,6 @@ def run_cypher_query(query):
 
 # 查询所有节点和关系
 def search_all():
-    return 0
     data = []
     links = []
 
@@ -122,17 +121,17 @@ def index(request):
         search_neo4j_data = search_one(node_name)
         print(node_name)
         print(search_neo4j_data)
-        # search_neo4j_data = [
-        #     {
-        #         'data': [
-        #             {'name': 'SearchNode1', 'category': 0, 'des': 'This is SearchNode 1'},
-        #             {'name': 'SearchNode2', 'category': 1, 'des': 'This is SearchNode 2'},
-        #         ],
-        #         'links': [
-        #             {'source': 'SearchNode1', 'target': 'SearchNode2', 'name': 'SearchRelation'},
-        #         ]
-        #     }
-        # ]
+        search_neo4j_data = [
+            {
+                'data': [
+                    {'name': 'SearchNode1', 'category': 0, 'des': 'This is SearchNode 1'},
+                    {'name': 'SearchNode2', 'category': 1, 'des': 'This is SearchNode 2'},
+                ],
+                'links': [
+                    {'source': 'SearchNode1', 'target': 'SearchNode2', 'name': 'SearchRelation'},
+                ]
+            }
+        ]
         if search_neo4j_data == 0:
             print(-1)
             ctx = {'title': '数据库中暂未添加该实体'}
@@ -140,21 +139,21 @@ def index(request):
             return render(request, 'index.html', {'neo4j_data': neo4j_data, 'ctx': ctx})
         else:
             # 走的是这里
-            #neo4j_data = search_all()
+            neo4j_data = search_all()
             print(2)
-            # neo4j_data = [
-            #     {
-            #         'data': [
-            #             {'name': 'Node1', 'category': 0, 'des': 'This is Node 1'},
-            #             {'name': 'Node2', 'category': 1, 'des': 'This is Node 2'},
-            #             {'name': 'Node3', 'category': 2, 'des': 'This is Node 3'},
-            #         ],
-            #         'links': [
-            #             {'source': 'Node1', 'target': 'Node2', 'name': 'Relation1'},
-            #             {'source': 'Node2', 'target': 'Node3', 'name': 'Relation2'},
-            #         ]
-            #     }
-            # ]
+            neo4j_data = [
+                {
+                    'data': [
+                        {'name': 'Node1', 'category': 0, 'des': 'This is Node 1'},
+                        {'name': 'Node2', 'category': 1, 'des': 'This is Node 2'},
+                        {'name': 'Node3', 'category': 2, 'des': 'This is Node 3'},
+                    ],
+                    'links': [
+                        {'source': 'Node1', 'target': 'Node2', 'name': 'Relation1'},
+                        {'source': 'Node2', 'target': 'Node3', 'name': 'Relation2'},
+                    ]
+                }
+            ]
             neo4j_data = search_neo4j_data
             ctx = None
             return render(request, 'index.html',
