@@ -1,14 +1,9 @@
-
-import json
-with open('./config.json','r',encoding='utf8')as fp:
-    json_data = json.load(fp)
-    print(json_data)
-    database = json_data['database']
-    password = json_data['password']
-
 from neomodel import db
 from neomodel import StructuredNode, StringProperty, FloatProperty, RelationshipTo, RelationshipFrom
 from neomodel import config
+
+database = 'neo4j'
+password = '3022244323'
 
 # Using config option
 config.DATABASE_URL = f'bolt://{database}:{password}@localhost:7687'
