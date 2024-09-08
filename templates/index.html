@@ -134,13 +134,12 @@
         series: [{
             type: 'graph',
             layout: 'force',
-            symbolSize: 40,
-            roam: true,
+            symbolSize: 80,
             edgeSymbol: ['circle', 'arrow'],
             edgeSymbolSize: [2, 10],
             force: {
                 repulsion: 2500,
-                edgeLength: [10, 50]
+                edgeLength: [10, 50],
             },
             draggable: true,
             lineStyle: {
@@ -149,6 +148,7 @@
                     color: '#4b565b',
                 }
             },
+            roam: true,
             edgeLabel: {
                 normal: {
                     show: true,
@@ -163,6 +163,7 @@
                     textStyle: {}
                 }
             },
+            progressiveThreshold: 700,
             data: data2,
             links: links2,
             categories: categories2,
