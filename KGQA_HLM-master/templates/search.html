@@ -116,14 +116,28 @@
                     </div>
                     <div class="col-lg-2"></div>
                     <div class="col-lg-4">
-                        <div class="input-group" >
-                            <input type="text" id="search" class="form-control input-lg"  placeholder="请输入你要检索的名字...">
-                            <span class="input-group-addon btn btn-mint"  onclick="search()">搜索</span>
-                            <input type="text" id="delete" class="form-control input-lg"  placeholder="请输入你要删除的名字...">
-                            <span class="input-group-addon btn btn-mint"  onclick="delete_name()">删除</span>
-                        </div>     
+                        <div class="input-group">
+                            <!-- 第一个下拉框，显示“节点”和“边”两个选项 -->
+                            <select id="itemType" class="form-control input-lg">
+                                <option value="" disabled selected>请选择</option>
+                                <option value="node">药物</option>
+                                <option value="edge">疾病</option>
+                                <option value="edge">关系</option>
+                            </select>
+
+                            <!-- 第二个下拉框，显示“增加”，“删除”，“修改”，“查询”四个选项 -->
+                            <select id="actionType" class="form-control input-lg">
+                                <option value="" disabled selected>请选择操作</option>
+                                <option value="add">增加</option>
+                                <option value="delete">删除</option>
+                                <option value="modify">修改</option>
+                                <option value="query">查询</option>
+                            </select>
+
+                            <!-- 操作按钮 -->
+                            <span class="input-group-addon btn btn-mint" onclick="handleOperation()">执行操作</span>
+                        </div>
                     </div>
-                    
                     </div>
                     <div class="row" style="height: 40px;"></div>
                      <div class="row" >
@@ -436,6 +450,28 @@
 
         })
     });
+
+    // 操作处理函数
+    function handleOperation() {
+        var itemType = document.getElementById("itemType").value; // 获取第一个选择框的值
+        var actionType = document.getElementById("actionType").value; // 获取第二个选择框的值
+
+        if (!itemType) {
+            alert("请选择节点或边");
+            return;
+        }
+
+        if (!actionType) {
+            alert("请选择操作类型");
+            return;
+        }
+
+        // 根据选择的内容进行不同操作
+        alert("你选择了: " + itemType + " 进行 " + actionType + " 操作");
+
+        // 这里可以根据 itemType 和 actionType 来实现具体的操作逻辑
+        // 比如，节点的增加、边的删除等操作
+    }
 </script>
 </body>
 </html>
